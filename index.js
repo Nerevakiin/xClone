@@ -1,10 +1,9 @@
 import { tweetsData } from './data.js'
 import { v4 as uuidv4} from 'https://jspm.dev/uuid'
 
-const tweetInput = document.getElementById('tweet-input')
+
 
 document.addEventListener('click', function (e) {
-    console.log(e.target)
     if (e.target.dataset.like) {
         let tweetId = e.target.dataset.like
         handleLikeClick(tweetId)
@@ -69,9 +68,18 @@ function handleReplyClick(replyId){
 
 
 
+
+
+
 //handle new tweets manually inputed by user
 function handleTweetBtnClick(){
-    let newTweet = {
+    
+    const tweetInput = document.getElementById('tweet-input')
+
+    if (!tweetInput.value){
+        console.log("you must enter a valid string")
+    } else{
+        let newTweet = {
         handle: `@Scrimba`,
         profilePic: `images/scrimbalogo.png`,
         likes: 0,
@@ -86,6 +94,8 @@ function handleTweetBtnClick(){
     tweetsData.unshift(newTweet)
     tweetInput.value = ''
     render()
+    }
+    
 }
 
 
