@@ -1,7 +1,7 @@
 export const tweetsData = [   
     {
-        handle: `@TrollBot66756542 💎`,
-        profilePic: `images/troll.jpg`,
+        handle: `@CatBoy NFT Trader 💎`,
+        profilePic: `images/catboynft.png`,
         likes: 27,
         retweets: 10,
         tweetText: `Buy Bitcoin, ETH Make 💰💰💰 low low prices. 
@@ -12,19 +12,19 @@ export const tweetsData = [
         uuid: '4b161eee-c0f5-4545-9c4b-8562944223ee',
     },    
     {
-        handle: `@Elon ✅`,
-        profilePic: `images/musk.png`,
+        handle: `@Ewon Musk ✅`,
+        profilePic: `images/twincatboy.jpg`,
         likes: 6500,
         retweets: 234,
-        tweetText: `I need volunteers for a one-way mission to Mars 🪐. No experience necessary🚀`,
+        tweetText: `I need volunteers for a one-way mission to Mars 🪐. Only twinks may apply! 🚀`,
         replies: [
                   {
-                handle: `@TomCruise ✅`,
+                handle: `@TwinkCruise ✅`,
                 profilePic: `images/tcruise.png`,
                 tweetText: `Yes! Sign me up! 😎🛩`,
             },
                   {
-                handle: `@ChuckNorris ✅`,
+                handle: `@CuckNorris ✅`,
                 profilePic: `images/chucknorris.jpeg`,
                 tweetText: `I went last year😴`,
             },
@@ -34,21 +34,21 @@ export const tweetsData = [
         uuid: '3c23454ee-c0f5-9g9g-9c4b-77835tgs2',
     },
         {
-        handle: `@NoobCoder12`,
-        profilePic: `images/flower.png`,
+        handle: `@NoobTwink12`,
+        profilePic: `images/twinkmeme.png`,
         likes: 10,
         retweets: 3,
-        tweetText: `Are you a coder if you only know HTML?`,
+        tweetText: `Are you a real twink if you only mess with femboys??`,
         replies: [
             {
-                handle: `@StackOverflower ☣️`,
-                profilePic: `images/overflow.png`,
-                tweetText: `No. Onviosuly not. Go get a job in McDonald's.`,
+                handle: `@Adras Siderenios Alpha Male ☣️`,
+                profilePic: `images/adras.png`,
+                tweetText: `Pame sth gwnia glykouli, ti fovasai? Mh se dagwsw?`,
             },
             {
-                handle: `@YummyCoder64`,
-                profilePic: `images/love.png`,
-                tweetText: `You are wonderful just as you are! ❤️`,
+                handle: `@EkseligmenoTwinkaki`,
+                profilePic: `images/sfaliara.png`,
+                tweetText: `Kai egw adraki hmoun, san kai esena... ❤️`,
             },
         ],
         isLiked: false,

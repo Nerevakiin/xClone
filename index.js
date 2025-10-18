@@ -80,8 +80,8 @@ function handleTweetBtnClick(){
         console.log("you must enter a valid string")
     } else{
         let newTweet = {
-        handle: `@Scrimba`,
-        profilePic: `images/scrimbalogo.png`,
+        handle: `@OGTwink`,
+        profilePic: `images/literallyme.jpeg`,
         likes: 0,
         retweets: 0,
         tweetText: `${tweetInput.value}`,
