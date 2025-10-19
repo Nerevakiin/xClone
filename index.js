@@ -18,7 +18,11 @@ document.addEventListener('click', function (e) {
     }
     if (e.target.id == "tweet-btn"){
         handleTweetBtnClick()
-    } 
+    }
+    if (e.target.classList.contains('myreply-button')){
+        let tweetId = e.target.dataset.tweetid
+        handleMyReplyBtnClick(tweetId)
+    }
 })
 
 
@@ -44,7 +48,6 @@ function handleLikeClick(tweetId) {
 }
 
 
-
 function handleRetweetClick(tweetId) {
 
     const targetTweetObj = tweetsData.filter(function (tweet) {
@@ -67,6 +70,35 @@ function handleReplyClick(replyId){
 }
 
 
+function handleMyReplyBtnClick(tweetId){
+    //get the reply textarea for the specific tweet
+    const replyInput = document.getElementById(`reply-input-${tweetId}`)
+    
+    if (!replyInput.value){
+        console.log("you must enter a valid reply")
+        return
+    }
+    
+    //find the tweet (full xrisimi praktiki)
+    const targetTweet = tweetsData.find(tweet => tweet.uuid === tweetId)
+    
+    if (targetTweet) {
+        //create the new reply object
+        const newReply = {
+            handle: `@OGTwink`,
+            profilePic: `images/literallyme.jpeg`,
+            tweetText: replyInput.value,
+            uuid: uuidv4()
+        }
+        
+        //add the reply to the target tweet's replies array
+        targetTweet.replies.unshift(newReply)
+        
+        replyInput.value = ''
+        
+        render()
+    }
+}
 
 
 
@@ -74,7 +106,7 @@ function handleReplyClick(replyId){
 //handle new tweets manually inputed by user
 function handleTweetBtnClick(){
     
-    const tweetInput = document.getElementById('tweet-input')
+    const tweetInput = document.getElementById(`tweet-input`)
 
     if (!tweetInput.value){
         console.log("you must enter a valid string")
@@ -100,7 +132,6 @@ function handleTweetBtnClick(){
 
 
 
-
 function getFeedHtml() {
     let feedHtml = ``
 
@@ -118,10 +149,20 @@ function getFeedHtml() {
 
 
 
+
+        
         //handle tweet replies
         let repliesHTML = ""
+    
+        let myReply = `
+                <div class="myreply" id="myreply">
+                    <img src="images/literallyme.jpeg" class="profile-pic">
+                    <textarea placeholder="ekfrasou elefthera omorfopaido" class="reply-input" id="reply-input-${tweet.uuid}"></textarea>
+                    <button class="myreply-button" id="myreply-button" data-tweetid="${tweet.uuid}">Twink</button>
+                </div>`
 
         if (tweet.replies.length > 0) {
+
             tweet.replies.forEach(function(reply){
                 repliesHTML += `
                 <div class="tweet-reply">
@@ -165,9 +206,15 @@ function getFeedHtml() {
                         </div>   
                     </div>                 
                 </div>
+                
+
+                
                 <div id="replies-${tweet.uuid}">
+                    ${myReply}
+                    
                     ${repliesHTML} 
                 </div>
+                
             </div>
         `
     })

@@ -76,7 +76,9 @@ textarea{
     background-color: #FF69B4;
 }
 
-button{
+
+
+.tweet-btn{
     background-color: #5BCEFA;
     border: solid 2px;
     border-color: white;
@@ -147,4 +149,25 @@ button{
 /* utility */
 .hidden{
     display: none;
+}
+
+.myreply{
+    display: flex;
+    height: 5%
+}
+
+.myreply-button{
+
+    background-color: #5BCEFA;
+    border: solid 2px;
+    border-color: white;
+    color: white;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.reply-input,
+.reply-input::placeholder{
+    font-size: 13;
+    line-height: 18px;
 }
