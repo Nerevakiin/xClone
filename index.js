@@ -1,5 +1,7 @@
-import { tweetsData } from './data.js'
+import { tweetsData as initialTweetsData } from './data.js'
 import { v4 as uuidv4} from 'https://jspm.dev/uuid'
+
+let tweetsData = JSON.parse(localStorage.getItem("tweetsData")) || initialTweetsData;
 
 
 
@@ -42,6 +44,7 @@ function handleLikeClick(tweetId) {
     }
     targetTweetObj.isLiked = !targetTweetObj.isLiked
 
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData))
 
     render()
 
@@ -60,6 +63,8 @@ function handleRetweetClick(tweetId) {
         targetTweetObj.retweets++
     }
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
+
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData))
 
     render()
 }
@@ -95,6 +100,8 @@ function handleMyReplyBtnClick(tweetId){
         targetTweet.replies.unshift(newReply)
         
         replyInput.value = ''
+
+        localStorage.setItem("tweetsData", JSON.stringify(tweetsData))
         
         render()
     }
@@ -122,9 +129,15 @@ function handleTweetBtnClick(){
         isRetweeted: false,
         uuid: uuidv4(),
     }
+
+    
+    
     //push  them into the array and make them appear in the screen
     tweetsData.unshift(newTweet)
     tweetInput.value = ''
+
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData))
+    
     render()
     }
     
@@ -132,9 +145,12 @@ function handleTweetBtnClick(){
 
 
 
+
 function getFeedHtml() {
     let feedHtml = ``
-
+        
+    
+    
     tweetsData.forEach(function (tweet) {
 
         //conditional css class switches for likes and retweets
@@ -148,8 +164,7 @@ function getFeedHtml() {
         }
 
 
-
-
+        
         
         //handle tweet replies
         let repliesHTML = ""
@@ -181,7 +196,7 @@ function getFeedHtml() {
         }
 
 
-
+        
         feedHtml +=
             `
             <div class="tweet">
