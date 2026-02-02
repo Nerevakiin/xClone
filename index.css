@@ -40,8 +40,8 @@ i{
 main, header{
     width: 290px;
     margin: 0 auto;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
     padding-top: 10px;
     background-color: #FF69B4;
     border-radius: 20px;
@@ -104,6 +104,7 @@ textarea{
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    position: relative;
 }
 
 .tweet-details{
@@ -146,6 +147,11 @@ textarea{
     width: 48px;
 }
 
+.profile-pic#reply-profile-pic {
+    width: 25px;
+    height: 25px
+}
+
 /* utility */
 .hidden{
     display: none;
@@ -166,8 +172,20 @@ textarea{
     cursor: pointer;
 }
 
+
 .reply-input,
 .reply-input::placeholder{
     font-size: 13;
     line-height: 18px;
+}
+
+.delete-tweet{
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: solid #5BCEFA 1px;
+    border-radius: 100%;
+    padding: 5px;
+    font-style: normal;
 }
