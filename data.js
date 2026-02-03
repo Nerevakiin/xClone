@@ -1,4 +1,4 @@
-export let tweetsData = [   
+export const tweetsData = [   
     {
         handle: `@CatBoy NFT Trader 💎`,
         profilePic: `images/catboynft.png`,
