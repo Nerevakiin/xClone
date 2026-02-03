@@ -1,8 +1,31 @@
-import { tweetsData as initialTweetsData } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 
-let tweetsData = JSON.parse(localStorage.getItem("tweetsData")) || initialTweetsData;
 
+// ======= the new back end over engineered functionality
+
+let tweetsData = [];
+
+// Fetch tweets data from API on page load
+async function initializeTweetsData() {
+
+    try {
+
+        const response = await fetch('/api/tweets')
+        const data = await response.json()
+        
+        // Use localStorage if available, otherwise use API data
+        tweetsData = JSON.parse(localStorage.getItem("tweetsData")) || data;
+        render();
+
+    } catch (error) {
+        console.error('Error fetching tweets:', error)
+    }
+}
+
+// Initialize data on page load
+document.addEventListener('DOMContentLoaded', initializeTweetsData);
+
+// ===========
 
 
 document.addEventListener('click', function (e) {

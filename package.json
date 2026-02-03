@@ -1,0 +1,25 @@
+{
+  "name": "twinkter",
+  "version": "1.1.0",
+  "description": "a twitter clone for twink catboys now with backend functionality",
+  "homepage": "https://github.com/Nerevakiin/xClone#readme",
+  "bugs": {
+    "url": "https://github.com/Nerevakiin/xClone/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nerevakiin/xClone.git"
+  },
+  "license": "ISC",
+  "author": "stamatis",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  }
+}
