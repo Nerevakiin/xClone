@@ -22,35 +22,40 @@
 		<h1>Twinkter</h1>
         <button onclick="document.location='index.html'">home page</button>
 	</header>
-	<main>
-		<div class="signup-screen">
+	
+    <main class="signup-screen">
+		
+        <div>
 			<img src="images/literallyme.jpeg" class="profile-pic">
             <br>
             <form class="signup-form" id="signup-form" autocomplete="off">
                 <h2>Sign Up to Twinkter</h2>
+
                 <label for="signup-email">Email</label>
-                <input type="email" placeholder="poustromail" id="signup-email" name="email"></input>
+                <input type="email" placeholder="poustromail" id="signup-email" name="email" required></input>
 
                 <label for="signup-password">Password</label>
-                <input type="password" placeholder="poustropassword" id="signup-password" name="password"></input>
+                <input type="password" placeholder="poustropassword" id="signup-password" name="password" required></input>
 
                 <label for="signup-username">Username</label>
                 <input 
                 placeholder="username"
                 id="signup-username"
                 name="username"
-                pattern="^[a-zA-Z0-9_\-]{1,20}$"></input>
+                pattern="^[a-zA-Z0-9_\-]{1,20}$"
+                required></input>
 
+                <label for ="signup-fullname">Full name</label>
+                <input placeholder="full name" id="signup-fullname" required></input>
 
-                <input placeholder="full name" id="signup-fullname"></input>
+                <button type="submit" class="signup-btn" id="signup-btn">sign up to Twinkter!</button>
+                <p>Already registered? <a href="/login.html" class="sign-link">Sign in here!</a>.</p>
             </form>
 		</div>
-		<button class="tweet-btn" id="tweet-btn">sign up to Twinkter!</button>
-		<div class="feed" id="feed">
-			<!-- tweet feed here -->
-		</div>
+		
+
 	</main>
-	<script src="index.js" type="module"></script>
+	<!-- <script src="index.js" type="module"></script> -->
 </body>
 
 </html>
