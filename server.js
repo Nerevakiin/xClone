@@ -1,5 +1,6 @@
 import express from 'express'
 import { tweetsRouter } from './routes/tweetsRouter.js'
+import { authRouter } from './routes/auth.js'
 
 const app = express()
 const PORT = 8000
@@ -10,6 +11,7 @@ app.use(express.json())
 app.use(express.static('public'))
 
 app.use('/api/tweets', tweetsRouter)
+app.use('/api/auth', authRouter)
 
 app.use((req, res) => {
     res.status(400).json({
