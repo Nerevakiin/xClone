@@ -1,6 +1,7 @@
 import validator from 'validator'
 import { getDBConnection } from '../db/db.js'
 import bcrypt, { hash } from 'bcryptjs'
+import { use } from 'react'
 
 export async function registerUser(req, res) {
     
@@ -45,11 +46,11 @@ export async function registerUser(req, res) {
             return res.status(400).json({error: 'email or username already in use'})
         }
 
-        await db.run('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)',
+        const result = await db.run('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)',
             [name, email, username, hashedPassword]
         )
 
-        // req.session.userId = result.lastID // this will bind our logged in user to the session !! for later use
+        req.session.userId = result.lastID // this will bind our logged in user to the session !! for later use
 
         res.status(201).json({ message: 'user registered succesfully'})
 
@@ -58,5 +59,48 @@ export async function registerUser(req, res) {
         console.error('registration error: ', err.message)
         res.status(500).json({error: 'registration failed, server side issue'})
     }
+}
+
+
+
+export async function loginUser(req, res) {
+
+    console.log('start controller here. req.body is: ', req.body)
+
+    let {username, password} = req.body
+
+    if (!username || !password) {
+        return res.status(400).json({error: 'fill all'})
+    }
+
+    username = username.trim()
+
+    try {
+
+        const db = await getDBConnection()
+
+        const user = db.get('SELECT * FROM users WHERE name = ?', [username])
+
+        // --- checking if such username exists in the database 
+        if (!user) {
+            return res.status(400).json({error: 'invalid credentials'})
+        }
+
+        // compares th password given with the password hash in the db
+        const isValid = bcrypt.compare(password, user.password)
+        
+        if (!isValid) {
+            return res.status(400).json({error: 'invalid credentials'})
+        }
+
+        console.log('user trying to login: ', user)
+
+        req.session.userId = user.id 
+        res.json({ message: 'Logged in!' })
+
+    } catch (err) {
+        console.error('login error: ', err.message)
+    }
+
 }
 

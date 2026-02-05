@@ -38,7 +38,7 @@ i{
 /* layout */
 
 main, header{
-    width: 290px;
+    width: 300px;
     margin: 0 auto;
     padding-left: 80px;
     padding-right: 80px;
@@ -50,9 +50,14 @@ main, header{
 }
 
 header{
-    padding-bottom: 25px;
-    
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
+
+
 
 .tweet-input-area {
     display: flex;
@@ -79,6 +84,7 @@ textarea{
 
 
 .tweet-btn{
+    margin-top: .5em;
     background-color: #5BCEFA;
     border: solid 2px;
     border-color: white;
@@ -89,7 +95,24 @@ textarea{
     cursor: pointer;
     font-size: 20px;
     font-weight: 600;
+    transition: background-color 0.3s;
 }
+
+.tweet-btn:hover {
+    background-color: dodgerblue;
+}
+
+/* .form-btn {
+    margin-top: .5em;
+    background-color: #5BCEFA;
+    color: white;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.1rem;
+} */
 
 /* tweet */
 
@@ -200,20 +223,28 @@ textarea{
 
 /* ========== SIGN UP SCREEN ========= */
 
+
 .signup-screen {
-    display: flex;
     padding-top: 20px;
     margin-top: 60px;
-    
 }
 
-
 .signup-form {
-    border: dotted black 1px;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    padding: 30px;
     gap: .4rem;
-
 }
+
+.form-inner {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+
+.login-screen {
+    padding-top: 20px;
+    margin-top: 60px;
+}
+

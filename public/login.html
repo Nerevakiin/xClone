@@ -22,17 +22,35 @@
 		<h1>Twinkter</h1>
         <button onclick="document.location='index.html'">home page</button>
 	</header>
-	<main>
-		<div class="login-screen">
-			<img src="images/literallyme.jpeg" class="profile-pic">
-            <br>
-            <input placeholder="poustromail" id="login-email"></input>
-            <input placeholder="poustropassword" id="login-password"></input>
-		</div>
-		<button class="tweet-btn" id="tweet-btn">log in to twinkter</button>
-		<p>Dont have an account? <a href="/signup.html" class="sign-link">Sign up here!</a>.</p>
+	
+	<main class="login-screen">
+		
+		<form class="login-form" id="login-form" autocomplete="off">
+            
+            <div class="form-inner">
+				<h2>ksanagyrises e? ;)</h2>
+				<label for="login-username">username</label>
+				<input 
+				placeholder="poustronoma"
+				id="login-username"
+				name="username"
+				required
+				pattern="^[a-zA-Z0-9_\-]{1,20}$"
+				></input>
+				
+				<label for="login-password">password</label>
+				<input placeholder="poustropassword" id="login-password" name="password" type="password" required></input>
+				
+				<button type ="submit" class="tweet-btn" id="login-btn">log in to twinkter</button>
+				<p>Dont have an account? <a href="/signup.html" class="sign-link">Sign up here!</a>.</p>
+				<p id="error-message" class="error"></p>
+
+			</div>
+			
+		</form>
+		
 	</main>
-	<!-- <script src="index.js" type="module"></script> -->
+	<script src="login.js" type="module"></script>
 </body>
 
 </html>
