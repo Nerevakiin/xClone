@@ -5,10 +5,10 @@ signupForm.addEventListener('submit', async (e) => {
     
     e.preventDefault() // prevent form from reloading
 
-    const name = document.getElementById('signup-fullname').value
-    const email = document.getElementById('signup-email').value
-    const username = document.getElementById('signup-username').value
-    const password = document.getElementById('signup-password').value
+    const name = document.getElementById('signup-fullname').value.trim()
+    const email = document.getElementById('signup-email').value.trim()
+    const username = document.getElementById('signup-username').value.trim()
+    const password = document.getElementById('signup-password').value.trim()
     const submitBtn = document.getElementById('signup-btn')
 
     errorMessage.textContent = '' // clear old errors

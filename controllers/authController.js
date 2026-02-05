@@ -1,6 +1,6 @@
 import { validator } from 'validator'
-// import { getDBConnection } from '../db/db.js'
-// import bcrypt from 'bcryptjs'
+import { getDBConnection } from '../db/db.js'
+import bcrypt, { hash } from 'bcryptjs'
 
 export async function registerUser(req, res) {
     
@@ -29,5 +29,36 @@ export async function registerUser(req, res) {
     }
 
     console.log('req.body after server side correction: ', req.body)
+
+    try {
+
+        const hashedPassword = await bcrypt.hash(password, 10) // hashing the password with bcrypt
+
+        const db = await getDBConnection()
+
+        // check if the user registering is already in the db
+        const existing = await db.get(`SELECT id FROM users WHERE email = ? OR username = ?`,
+            [email, username]
+        )
+
+        if (existing) {
+            return res.status(400).json({error: 'email or username already in use'})
+        }
+
+        const result = await db.run('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)',
+            [name, email, username, hashedPassword]
+        )
+
+        // req.session.userId = result.lastID // this will bind our logged in user to the session !! for later use
+
+        res.status(201).json({ message: 'user registered succesfully'})
+
+
+
+
+    } catch (err) {
+        console.error('registration error: ', err.message)
+        res.status(500).json({error: 'registration failed, server side issue'})
+    }
 
 }
