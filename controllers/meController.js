@@ -5,6 +5,7 @@ export async function getCurrentUser(req, res) {
 
     try {
 
+        console.log('me controller reached')
         const db = await getDBConnection()
 
         // see if there is no logged in user

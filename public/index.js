@@ -1,5 +1,16 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
+import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 
+
+
+// === init load for user
+async function init() {
+    const name = await checkAuth()
+    renderGreeting(name)
+    showHideMenuItems(name)
+}
+
+init()
 
 // ======= the new back end over engineered functionality
 

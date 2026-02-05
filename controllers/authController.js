@@ -1,11 +1,10 @@
 import validator from 'validator'
 import { getDBConnection } from '../db/db.js'
-import bcrypt, { hash } from 'bcryptjs'
-import { use } from 'react'
+import bcrypt from 'bcryptjs'
 
 export async function registerUser(req, res) {
     
-    console.log('req.body before server side correction: ', req.body)
+    
     
     let {name, email, username, password} = req.body // destructuring the body properties
 
@@ -17,7 +16,7 @@ export async function registerUser(req, res) {
     // trim them of unecessary spaces
     name = name.trim()
     email = email.trim()
-    username = username.trim()
+    username = username.trim().toLowerCase()
 
     // check the username regex requirements
     if (!/^[a-zA-Z0-9_-]{1,20}$/.test(username)) {
@@ -29,7 +28,7 @@ export async function registerUser(req, res) {
         res.status(400).json({error: 'invalid email'})
     }
 
-    console.log('req.body after server side correction: ', req.body)
+    
 
     try {
 
@@ -65,7 +64,7 @@ export async function registerUser(req, res) {
 
 export async function loginUser(req, res) {
 
-    console.log('start controller here. req.body is: ', req.body)
+    console.log('login controller here. req.body is: ', req.body)
 
     let {username, password} = req.body
 
@@ -79,18 +78,20 @@ export async function loginUser(req, res) {
 
         const db = await getDBConnection()
 
-        const user = db.get('SELECT * FROM users WHERE name = ?', [username])
+        console.log('searching for username: ', username)
+        const user = await db.get('SELECT * FROM users WHERE username = ?', [username])
+        console.log('user found: ', user)
 
         // --- checking if such username exists in the database 
         if (!user) {
-            return res.status(400).json({error: 'invalid credentials'})
+            return res.status(400).json({error: 'invalid credentials name'})
         }
 
         // compares th password given with the password hash in the db
-        const isValid = bcrypt.compare(password, user.password)
+        const isValid = await bcrypt.compare(password, user.password)
         
         if (!isValid) {
-            return res.status(400).json({error: 'invalid credentials'})
+            return res.status(400).json({error: 'invalid credentials password'})
         }
 
         console.log('user trying to login: ', user)
