@@ -1,4 +1,4 @@
-import { validator } from 'validator'
+import validator from 'validator'
 import { getDBConnection } from '../db/db.js'
 import bcrypt, { hash } from 'bcryptjs'
 
@@ -9,7 +9,7 @@ export async function registerUser(req, res) {
     let {name, email, username, password} = req.body // destructuring the body properties
 
     // check if all necessary properties exist, otherwise return
-    if (!!name || !email || !username || !password) {
+    if (!name || !email || !username || !password) {
         return res.status(400).json({ error: 'All fields are required'})
     }
 
@@ -45,7 +45,7 @@ export async function registerUser(req, res) {
             return res.status(400).json({error: 'email or username already in use'})
         }
 
-        const result = await db.run('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)',
+        await db.run('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)',
             [name, email, username, hashedPassword]
         )
 
@@ -54,11 +54,9 @@ export async function registerUser(req, res) {
         res.status(201).json({ message: 'user registered succesfully'})
 
 
-
-
     } catch (err) {
         console.error('registration error: ', err.message)
         res.status(500).json({error: 'registration failed, server side issue'})
     }
-
 }
+
