@@ -37,11 +37,11 @@ wss.on('connection', (ws, request) => {
 
         //echo back
         ws.send(`SERVER RECEIVED: ${data}`)
-
+        
         //broadcast to all clients
         wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(data)
+                client.send(data.toString()) // if its not stringified it returns an object blob
             }
         })
     })

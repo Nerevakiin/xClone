@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 import { logout } from '/logout.js'
 
+
+
 let name = null; // Declare name at the top level
 
 document.getElementById("logout-btn").addEventListener('click', logout)
@@ -53,28 +55,25 @@ const sendMsgBtn = document.getElementById('msg-btn')
 const messagesDiv = document.getElementById('chatroom-inner')
 
 // this event fires once when the connection is successfully established
-socket.addEventListener('open', () => {
-    console.log('CONNECTED TO SERVER FROM FRONT END')
+socket.addEventListener('open', (event) => {
+    console.log('WEBSOCKET CONNECTION ESTABLISHED')
 })
 
 // Event listener for incoming messages. When server sends data, this runs
 socket.addEventListener('message', (event) => {
-    const msg = document.createElement('div') // Creates a new <div>, puts the message text in it, adds to message container
-    msg.textContent = event.data // contains the message from server
+    const msg = document.createElement('div') // // Creates a new <div>, puts the message text in it, adds to message container
+    msg.textContent = event.data // contains the message from the server
     messagesDiv.appendChild(msg)
+    messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
 })
 
 // sends the message to the server when the btn is clicked
 sendMsgBtn.addEventListener('click', () => {
-    if (chatInput.value.trim() === '') return
+    if (chatInput.value.trim() === '') return 
 
     socket.send(chatInput.value)
     chatInput.value = ''
 })
-
-
-
-
 
 
 

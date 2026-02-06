@@ -274,30 +274,41 @@ textarea{
     width: 25rem;
     right: 10%;
     top: 20%;
-    margin: auto;
     background-color: #FF69B4;
+    display: flex;
+    flex-direction: column;
 }
 
 .chatroom-header {
     display: flex;
     justify-content: center;
+    padding: 10px 0;
+    margin: 0;
 }
 
 .chatroom-inner {
     border: dotted black 1px;
     border-radius: 10px;
-    padding-bottom: 30rem;
-    margin: 20px;
+    margin: 10px;
     background-color: #5BCEFA;
+
+    flex: 1;            /* Takes remaining space */
+    overflow-y: auto;
+    padding: 10px;      /* Inner padding instead of huge bottom padding */
+
 }
 
 .text-messages {
     align-items: center;
     justify-content: center;
     display: flex;
+    padding: 10px;
+    margin-top: auto;
 }
 
 .text-messages#text {
     width: 50px;
 }
+
+
 

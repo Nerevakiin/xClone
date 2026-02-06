@@ -105,11 +105,9 @@ export async function loginUser(req, res) {
 
 }
 
-
 export async function logoutUser(req, res) {
     console.log('logout btn pressed from the server')
     req.session.destroy( () => {
         return res.json({ message: 'logged out' })
     })
 }
-
