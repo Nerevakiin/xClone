@@ -2,12 +2,13 @@ import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 import { logout } from '/logout.js'
 
+let name = null; // Declare name at the top level
 
 document.getElementById("logout-btn").addEventListener('click', logout)
 
 // === init load for user
 async function init() {
-    const name = await checkAuth()
+    name = await checkAuth()
     renderGreeting(name)
     showHideMenuItems(name)
 }
@@ -37,6 +38,51 @@ async function initializeTweetsData() {
 
 // Initialize data on page load
 document.addEventListener('DOMContentLoaded', initializeTweetsData);
+
+
+
+
+
+
+
+// ============ FRONT END WEBSOCKET !!! =======
+const socket = new WebSocket('ws://localhost:8000') // create the connection to the websocket server written in server.js
+
+const chatInput = document.getElementById('chat-input')
+const sendMsgBtn = document.getElementById('msg-btn')
+const messagesDiv = document.getElementById('chatroom-inner')
+
+// this event fires once when the connection is successfully established
+socket.addEventListener('open', () => {
+    console.log('CONNECTED TO SERVER FROM FRONT END')
+})
+
+// Event listener for incoming messages. When server sends data, this runs
+socket.addEventListener('message', (event) => {
+    const msg = document.createElement('div') // Creates a new <div>, puts the message text in it, adds to message container
+    msg.textContent = event.data // contains the message from server
+    messagesDiv.appendChild(msg)
+})
+
+// sends the message to the server when the btn is clicked
+sendMsgBtn.addEventListener('click', () => {
+    if (chatInput.value.trim() === '') return
+
+    socket.send(chatInput.value)
+    chatInput.value = ''
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ===========
 
@@ -130,7 +176,7 @@ function handleMyReplyBtnClick(tweetId) {
     if (targetTweet) {
         // create the new reply object
         const newReply = {
-            handle: `@OGTwink`,
+            handle: name,
             profilePic: `images/literallyme.jpeg`,
             tweetText: replyInput.value,
             uuid: uuidv4()
@@ -159,7 +205,7 @@ function handleTweetBtnClick() {
         console.log("you must enter a valid string")
     } else {
         let newTweet = {
-            handle: `@OGTwink`,
+            handle: name,
             profilePic: `images/literallyme.jpeg`,
             likes: 0,
             retweets: 0,
@@ -192,7 +238,7 @@ function handleDeleteBtnClick(tweetId) {
     console.log('targettweet is: ', targetTweet)
 
     // check if the tweet is mine
-    if (!targetTweet || targetTweet.handle !== "@OGTwink"){
+    if (!targetTweet || targetTweet.handle !== name){
         console.log('this tweet is not yours')
         return
     }
@@ -260,7 +306,7 @@ function getFeedHtml() {
 
 
         // check if the reply is made by me and insert it down at the html
-        const deleteButtonHtml = tweet.handle === "@OGTwink" 
+        const deleteButtonHtml = tweet.handle === name 
         ? `<i class="delete-tweet" data-delete="${tweet.uuid}">X</i>`
         : '';
         

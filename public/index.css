@@ -266,3 +266,38 @@ textarea{
 
 }
 
+.chatroom {
+    border: dotted black 2px;
+    border-radius: 20px;
+    position: fixed;
+    height: 38rem;
+    width: 25rem;
+    right: 10%;
+    top: 20%;
+    margin: auto;
+    background-color: #FF69B4;
+}
+
+.chatroom-header {
+    display: flex;
+    justify-content: center;
+}
+
+.chatroom-inner {
+    border: dotted black 1px;
+    border-radius: 10px;
+    padding-bottom: 30rem;
+    margin: 20px;
+    background-color: #5BCEFA;
+}
+
+.text-messages {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.text-messages#text {
+    width: 50px;
+}
+
