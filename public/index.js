@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
+import { logout } from '/logout.js'
 
 
+document.getElementById("logout-btn").addEventListener('click', logout)
 
 // === init load for user
 async function init() {
@@ -199,8 +201,8 @@ function handleDeleteBtnClick(tweetId) {
 
         // delete the selected tweet by filtering it out of the tweetsData array 
         console.log('this tweet is yours. deleting...')
-        tweetsData = tweetsData.filter(tweet => tweet.uuid !== tweetId);
-        localStorage.setItem("tweetsData", JSON.stringify(tweetsData));
+        tweetsData = tweetsData.filter(tweet => tweet.uuid !== tweetId)
+        localStorage.setItem("tweetsData", JSON.stringify(tweetsData))
 
         render()
     }  
