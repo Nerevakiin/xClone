@@ -10,7 +10,7 @@ more stuff to add:
 7. Create a user logic REGISTER ✅ (5 Feb 2026)
 8. Create user logic LOGIN & session & logout ✅ (6 Feb 2026)
 9. Create user logic to SEE and MAKE POSTS ✅ (6 Feb 2026)
-10. Add websockets for messaging.
+10. Add websockets for messaging. ✅ (7 Feb 2026)
 11. Auto uwuification
 12. Upload to a contact vm
 
