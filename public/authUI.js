@@ -1,7 +1,9 @@
 // === check if user is signed in ====
 export async function checkAuth() {
     try {
-        const res = await fetch('/api/auth/me')
+        const res = await fetch('/api/auth/me', {
+            credentials: 'include'
+        })
 
         if (!res.ok) {
             console.warn('unexpected response', res.status)

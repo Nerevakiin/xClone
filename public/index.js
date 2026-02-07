@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', initializeTweetsData);
 
 
 // ============ FRONT END WEBSOCKET !!! =======
+
 const socket = new WebSocket('ws://localhost:8000') // create the connection to the websocket server written in server.js
 
 const chatInput = document.getElementById('chat-input')
@@ -55,19 +56,24 @@ const sendMsgBtn = document.getElementById('msg-btn')
 const messagesDiv = document.getElementById('chatroom-inner')
 
 // this event fires once when the connection is successfully established
+
 socket.addEventListener('open', (event) => {
     console.log('WEBSOCKET CONNECTION ESTABLISHED')
 })
 
 // Event listener for incoming messages. When server sends data, this runs
+
 socket.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data)
     const msg = document.createElement('div') // // Creates a new <div>, puts the message text in it, adds to message container
-    msg.textContent = event.data // contains the message from the server
+    
+    msg.innerHTML = `<strong>${data.user}:</strong> ${data.text}` // contains the message from the server
     messagesDiv.appendChild(msg)
     messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
 })
 
 // sends the message to the server when the btn is clicked
+
 sendMsgBtn.addEventListener('click', () => {
     if (chatInput.value.trim() === '') return 
 

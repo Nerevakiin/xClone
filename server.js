@@ -14,55 +14,20 @@ const app = express()
 const PORT = 8000
 const secret = process.env.SPIRAL_SESSION_SECRET || 'kolotsibouxalaoua'
 
-// create the HTTP server (REQUIRED for WebSockets + Express)
-const server = createServer(app)
 
 
+// ===== middleware section ========
 
-// ======= create the WebSocket server =======
-const wss = new WebSocketServer({ server }) // <- pass the HTTP server here
+// CORS allow us to deploy our backend so others can also interact with it
+app.use(cors({
+    origin: `http://localhost:${PORT}`,
+    credentials: true
+})) 
 
-// websocket connection handler. this handles the new connection. Runs for each new client that connects
-wss.on('connection', (ws, request) => {
-    
-    console.log('NEW WEBSOCKET CONNECTION!')
-
-    // extract session from cookies if needed (idk why?)
-    const cookies = request.headers.cookie 
-    // you can parse session from cookies here (idk what this means)
-
-    // Handle messages from this client
-    ws.on('message', (data) => {
-        console.log('RECEIVED: ', data.toString())
-
-        //echo back
-        ws.send(`SERVER RECEIVED: ${data}`)
-        
-        //broadcast to all clients
-        wss.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(data.toString()) // if its not stringified it returns an object blob
-            }
-        })
-    })
-
-    // send welcome message
-    ws.send(JSON.stringify({
-        type: 'system',
-        text: 'wra na gleipseis poutses gay adra!'
-    }))
-})
-
-
-
-
-// ===== middleware section ======== 
 app.use(express.json())
 
-app.use(cors()) // CORS allow us to deploy our backend so others can also interact with it
-
 // express-session set for authentication credentials and cookies to keep the session
-app.use(session({
+const sessionMiddleware = session({
     secret: secret,
     resave: false,
     saveUninitialized: false,
@@ -71,14 +36,86 @@ app.use(session({
         secure: false,
         sameSite: 'lax'
     }
-}))
+})
+
+app.use(sessionMiddleware)
+
+
+
+
+app.use('/api/auth/me', meRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/tweets', tweetsRouter)
 
 
 app.use(express.static('public'))
 
-app.use('/api/tweets', tweetsRouter)
-app.use('/api/auth/me', meRouter)
-app.use('/api/auth', authRouter)
+
+
+// create the HTTP server (REQUIRED for WebSockets + Express)
+const server = createServer(app)
+
+// ======= create the WebSocket server =======
+const wss = new WebSocketServer({ server }) // <- pass the HTTP server here
+
+
+
+
+// websocket connection handler. this handles the new connection. Runs for each new client that connects
+
+wss.on('connection', (ws, request) => {
+    
+    console.log('NEW WEBSOCKET CONNECTION!')
+
+    sessionMiddleware(request, {}, () => {
+
+        // now request.session is available
+        const userName = request.session.userName || 'agnwsto poutanaki'
+
+        ws.username = userName
+        console.log(`${ws.username} connected via websocket`)
+    })
+
+    // const cookies = request.headers.cookie 
+
+    // Handle messages from this client
+    ws.on('message', (data) => {
+        console.log('RECEIVED: ', data.toString())
+
+        
+        // create a structure message
+        const messageObj = {
+            user: ws.username,
+            text: data.toString(),
+            timestamp: new Date().toLocaleTimeString()
+        }
+        
+        
+
+        //broadcast to all clients
+        wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(messageObj)) // if its not stringified it returns an object blob
+            }
+        })
+    })
+
+    // send welcome message
+    ws.send(JSON.stringify({
+        user: 'system',
+        text: `wra na gleipseis poutses gay adra`
+    }))
+})
+
+
+
+
+
+
+
+
+
+
 
 app.use((req, res) => {
     res.status(400).json({

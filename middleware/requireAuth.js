@@ -1,10 +1,8 @@
 export function requireAuth(req, res, next) {
-
-    if (!req.session.userId) {
-        console.log('access has been blocked')
-        return res.status(401).json({ error: 'unauthorized' })
+    // The ?. prevents the "Cannot read property of undefined" crash
+    if (req.session?.userId) {
+        next()
+    } else {
+        res.status(401).json({ error: 'Unauthorized' })
     }
-
-    next()
-    
 }

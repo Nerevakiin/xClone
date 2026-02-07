@@ -97,7 +97,12 @@ export async function loginUser(req, res) {
         console.log('user trying to login: ', user)
 
         req.session.userId = user.id 
-        res.json({ message: 'Logged in!' })
+        req.session.userName = user.name
+        
+        res.json({
+            message: 'Logged in!',
+            user: {name: user.name}
+        })
 
     } catch (err) {
         console.error('login error: ', err.message)
