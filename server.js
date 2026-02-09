@@ -63,7 +63,7 @@ const wss = new WebSocketServer({ server }) // <- pass the HTTP server here
 
 // websocket connection handler. this handles the new connection. Runs for each new client that connects !!!!!
 
-wss.on('connection', (ws, request) => {
+wss.on('connection', (ws, request) => { 
     
     console.log('NEW WEBSOCKET CONNECTION!')
 
@@ -78,8 +78,8 @@ wss.on('connection', (ws, request) => {
 
     // const cookies = request.headers.cookie 
 
-    // Handle messages from this client
-    ws.on('message', (data) => {
+    // Handle messages from this client 
+    ws.on('message', (data) => { 
         console.log('RECEIVED: ', data.toString())
 
         
