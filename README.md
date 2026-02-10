@@ -11,6 +11,7 @@ more stuff to add:
 8. Create user logic LOGIN & session & logout ✅ (6 Feb 2026)
 9. Create user logic to SEE and MAKE POSTS ✅ (6 Feb 2026)
 10. Add websockets for messaging. ✅ (7 Feb 2026)
-11. Add webRTC for video calls.
-12. Auto uwuification
-13. Upload to a contact vm
+11. Convert the server to HTTPS
+12. Add webRTC for video calls.
+13. Auto uwuification
+14. Upload to a contact vm

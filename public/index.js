@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 import { logout } from '/logout.js'
+import { initializeSocket, sendChatMessage } from '/socket.js'
 
 
 
@@ -13,6 +14,8 @@ async function init() {
     name = await checkAuth()
     renderGreeting(name)
     showHideMenuItems(name)
+
+    initializeSocket() // starting the socket here
 }
 
 init()
@@ -46,40 +49,47 @@ document.addEventListener('DOMContentLoaded', initializeTweetsData);
 
 
 
+// =========== 
 
-// ============ FRONT END WEBSOCKET !!! =======
 
-const socket = new WebSocket('ws://localhost:8000') // create the connection to the websocket server written in server.js
+// sends the message to the server when the btn is clicked
 
 const chatInput = document.getElementById('chat-input')
 const sendMsgBtn = document.getElementById('msg-btn')
 const messagesDiv = document.getElementById('chatroom-inner')
 
-// this event fires once when the connection is successfully established
+// CHAT LOGIC FRONT END
+sendMsgBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    const text = chatInput.value.trim()
+    if (text === '') return 
 
-socket.addEventListener('open', (event) => {
-    console.log('WEBSOCKET CONNECTION ESTABLISHED')
+    // show it to myself imediately in the front end
+    displayMessage('Me', text)
+
+    // send it to others
+    const payload = {
+        type: 'chat',
+        // user: 'gei adras',
+        text: text
+    }
+
+    sendChatMessage(JSON.stringify(payload))
+    chatInput.value = ''
+
 })
 
-// Event listener for incoming messages. When server sends data, this runs
 
-socket.addEventListener('message', (event) => {
-    const data = JSON.parse(event.data)
-    const msg = document.createElement('div') // // Creates a new <div>, puts the message text in it, adds to message container
-    
-    msg.innerHTML = `<strong>${data.user}:</strong> ${data.text}` // contains the message from the server
+function displayMessage(user, text) {
+
+    const msg = document.createElement('div')
+    msg.innerHTML = `<strong>${user}:</strong> ${text}` // contains the message from the server
+
     messagesDiv.appendChild(msg)
     messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
-})
 
-// sends the message to the server when the btn is clicked
+}
 
-sendMsgBtn.addEventListener('click', () => {
-    if (chatInput.value.trim() === '') return 
-
-    socket.send(chatInput.value)
-    chatInput.value = ''
-})
 
 
 

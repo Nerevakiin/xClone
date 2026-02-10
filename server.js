@@ -1,6 +1,7 @@
 import express from 'express'
-import { createServer } from 'http'
-import { WebSocketServer } from 'ws'
+import https from 'https'
+import fs from 'fs'
+import { WebSocketServer, WebSocket } from 'ws'
 import { tweetsRouter } from './routes/tweetsRouter.js'
 import { authRouter } from './routes/auth.js'
 import { meRouter } from './routes/me.js'
@@ -15,14 +16,19 @@ const PORT = 8000
 const secret = process.env.SPIRAL_SESSION_SECRET || 'kolotsibouxalaoua'
 
 
+const serverOptions = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+}
+
 
 // ===== middleware section ========
 
 // CORS allow us to deploy our backend so others can also interact with it
 app.use(cors({
-    origin: `http://localhost:${PORT}`,
+    origin: `https://192.168.100.3:${PORT}`,
     credentials: true
-})) 
+}))
 
 app.use(express.json())
 
@@ -33,7 +39,7 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'lax'
     }
 })
@@ -52,8 +58,8 @@ app.use(express.static('public'))
 
 
 
-// create the HTTP server (REQUIRED for WebSockets + Express)
-const server = createServer(app)
+// create the HTTPS server (REQUIRED for WebSockets + Express)
+const server = https.createServer(serverOptions, app)
 
 // ======= create the WebSocket server =======
 const wss = new WebSocketServer({ server }) // <- pass the HTTP server here
@@ -63,8 +69,8 @@ const wss = new WebSocketServer({ server }) // <- pass the HTTP server here
 
 // websocket connection handler. this handles the new connection. Runs for each new client that connects !!!!!
 
-wss.on('connection', (ws, request) => { 
-    
+wss.on('connection', (ws, request) => {
+
     console.log('NEW WEBSOCKET CONNECTION!')
 
     sessionMiddleware(request, {}, () => {
@@ -79,25 +85,44 @@ wss.on('connection', (ws, request) => {
     // const cookies = request.headers.cookie 
 
     // Handle messages from this client 
-    ws.on('message', (data) => { 
+    ws.on('message', (data) => {
+
         console.log('RECEIVED: ', data.toString())
 
-        
-        // create a structure message
-        const messageObj = {
-            user: ws.username,
-            text: data.toString(),
-            timestamp: new Date().toLocaleTimeString()
-        }
-        
-        
+        try {
 
-        //broadcast to all clients
-        wss.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(messageObj)) // if its not stringified it returns an object blob
+            // parse what the client sent
+            const clientData = JSON.parse(data.toString())
+
+            if (clientData.type === 'chat') {
+
+                // create a structure message
+                const messageObj = {
+                    type: 'chat',
+                    user: ws.username,
+                    text: clientData.toString(),
+                    timestamp: new Date().toLocaleTimeString()
+                }
+
+
+                //broadcast to all clients except the sender
+                wss.clients.forEach((client) => {
+                    if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify(messageObj)) // if its not stringified it returns an object blob
+                    }
+                })
+
             }
-        })
+
+
+
+
+        } catch (err) {
+            console.error('Error processing message:', err);
+        }
+
+
+
     })
 
     // send welcome message
