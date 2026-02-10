@@ -3,13 +3,13 @@
 <head>
 	<!-- CSS -->
 	<link rel="stylesheet" href="index.css">
-	
+
 	<!-- Awesome Font CDN -->
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" 
-	 integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" 
-	 crossorigin="anonymous" referrerpolicy="no-referrer" />
-	
-	 <!-- Google Fonts -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,18 +19,19 @@
 <body>
 	<header>
 		<h1>Twinkter</h1>
-			<div class="header-banner">
+		<div class="header-banner">
 			<p id="greeting" class="top-banner-greeting">greeting</p>
 			<button id="goto-login-btn" class="goto-login-btn" onclick="document.location='login.html'">login</button>
-			<button id="goto-signup-btn" class="goto-signup-btn" onclick="document.location='signup.html'">sign up</button>
+			<button id="goto-signup-btn" class="goto-signup-btn" onclick="document.location='signup.html'">sign
+				up</button>
 			<button id="logout-btn" class="logout-btn">logout</button>
-			
+
 		</div>
 	</header>
 	<main>
 		<div class="tweet-input-area">
 			<img src="images/literallyme.jpeg" class="profile-pic">
-            <textarea placeholder="ti egine poustraki?" id="tweet-input"></textarea>
+			<textarea placeholder="ti egine poustraki?" id="tweet-input"></textarea>
 		</div>
 		<button class="tweet-btn" id="tweet-btn">Twink your thought!</button>
 		<div class="feed" id="feed">
@@ -38,17 +39,32 @@
 		</div>
 
 	</main>
-	
-		<div id="chatroom" class="chatroom">
-			<h2 class="chatroom-header">grinder ;)</h2>
-			<div class="chatroom-inner" id="chatroom-inner">
-			</div>
-			
-			<section class="text-messages">
-				<input id="chat-input" placeholder="write your message here" type="text" />
-				<button type="submit" id="msg-btn">send msg</button>
-			</section>
+
+	<div id="chatroom" class="chatroom">
+		<h2 class="chatroom-header">grinder ;)</h2>
+		<div class="chatroom-inner" id="chatroom-inner">
 		</div>
+
+		<form class="text-messages">
+			<input id="chat-input" placeholder="write your message here" type="text" />
+			<button type="submit" id="msg-btn">send msg</button>
+		</form>
+	</div>
+
+
+	<div id="videocall" class="videocall">
+		<h2 class="videocall-header">videocall</h2>
+		<div class="videocall-inner" id="videocall-inner">
+			<video id="localVideo" autoplay playsinline muted controls="false"></video>
+			<video id="remoteVideo" autoplay playsinline controls="false"></video>
+		</div>
+
+		<form class="videocall-btns">
+			<button id="call-btn">call</button>
+			<button id="hang-btn">hang up</button>
+		</form>
+	</div>
+	
 
 	<script src="index.js" type="module"></script>
 	<script src="authUI.js" type="module"></script>

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 import { logout } from '/logout.js'
-import { initializeSocket, sendChatMessage } from '/socket.js'
+import { initializeSocket, sendChatMessage, startCamera, initiateCall, hangUpCall } from '/socket.js'
 
 
 
@@ -48,9 +48,10 @@ document.addEventListener('DOMContentLoaded', initializeTweetsData);
 
 
 
-// =========== WEBSOCKET =======
+// =========== WEBSOCKET & WebRTC Logic =======
 
 initializeSocket() // starting the socket here
+startCamera()
 
 
 // sends the message to the server when the btn is clicked
@@ -59,6 +60,9 @@ const chatInput = document.getElementById('chat-input')
 const sendMsgBtn = document.getElementById('msg-btn')
 const messagesDiv = document.getElementById('chatroom-inner')
 
+const clickBtn = document.getElementById('call-btn')
+const hangUpBtn = document.getElementById('hang-btn')
+
 // CHAT LOGIC FRONT END
 
 sendMsgBtn.addEventListener('click', (e) => {
@@ -66,13 +70,16 @@ sendMsgBtn.addEventListener('click', (e) => {
     const text = chatInput.value.trim()
     if (text === '') return 
 
+
+    // generate local time
+    const now = new Date().toLocaleTimeString()
+
     // show it to myself imediately in the front end
-    displayMessage('Me', text)
+    displayMessage('Me', text, now)
 
     // send it to others
     const payload = {
         type: 'chat',
-        // user: 'gei adras',
         text: text
     }
 
@@ -82,17 +89,25 @@ sendMsgBtn.addEventListener('click', (e) => {
 })
 
 
-function displayMessage(user, text) {
+function displayMessage(user, text, time) {
 
     const msg = document.createElement('div')
-    msg.innerHTML = `<strong>${user}:</strong> ${text}` // contains the message from the server
+    msg.innerHTML = `
+    <span class="chat-time">${time} |</span>
+    <strong>${user}:</strong> ${text}
+    ` // contains the message from the server
 
     messagesDiv.appendChild(msg)
     messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
-
 }
 
 
+clickBtn.addEventListener('click', initiateCall)
+hangUpBtn.addEventListener('click', hangUpCall)
+
+
+
+// ====================
 
 
 
@@ -100,8 +115,6 @@ function displayMessage(user, text) {
 
 
 
-
-// ===========
 
 
 document.addEventListener('click', function (e) {

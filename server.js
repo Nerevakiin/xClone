@@ -101,7 +101,7 @@ wss.on('connection', (ws, request) => {
                 const messageObj = {
                     type: 'chat',
                     user: ws.username,
-                    text: clientData.toString(),
+                    text: clientData.text,
                     timestamp: new Date().toLocaleTimeString()
                 }
 
