@@ -5,6 +5,8 @@ let socket = null
 const messagesDiv = document.getElementById('chatroom-inner')
 
 export function initializeSocket() {
+    
+    console.log("Attempting to connect to WSS..."); // this to confirm function runs
 
     socket = new WebSocket('wss://192.168.100.3:8000/') // create the connection to the websocket server written in server.js
 
@@ -12,6 +14,11 @@ export function initializeSocket() {
     socket.addEventListener('open', (event) => {
         console.log('WEBSOCKET CONNECTION ESTABLISHED')
     })
+
+    socket.addEventListener('error', (event) => {
+        console.error("WebSocket Error Observed:", event);
+    });
+
 
     socket.addEventListener('message', (event) => {
         try {
@@ -27,15 +34,13 @@ export function initializeSocket() {
             }
             
 
-
         } catch (err) {
             console.error('error parsing message: ', err)
         }
     })
 
-
-
 }
+
 
 export function sendChatMessage(jsonString) {
 

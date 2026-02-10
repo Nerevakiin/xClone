@@ -14,8 +14,7 @@ async function init() {
     name = await checkAuth()
     renderGreeting(name)
     showHideMenuItems(name)
-
-    initializeSocket() // starting the socket here
+    
 }
 
 init()
@@ -49,7 +48,9 @@ document.addEventListener('DOMContentLoaded', initializeTweetsData);
 
 
 
-// =========== 
+// =========== WEBSOCKET =======
+
+initializeSocket() // starting the socket here
 
 
 // sends the message to the server when the btn is clicked
@@ -59,6 +60,7 @@ const sendMsgBtn = document.getElementById('msg-btn')
 const messagesDiv = document.getElementById('chatroom-inner')
 
 // CHAT LOGIC FRONT END
+
 sendMsgBtn.addEventListener('click', (e) => {
     e.preventDefault()
     const text = chatInput.value.trim()

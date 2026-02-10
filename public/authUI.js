@@ -31,9 +31,9 @@ export function renderGreeting(name) {
 }
 
 // === only display logout button if logged in, else display login/sign in options
-export function showHideMenuItems(name) {
+export async function showHideMenuItems(name) {
     const isLoggedIn = name 
-    document.getElementById('login').style.display = isLoggedIn ? 'none' : 'inline'
-    document.getElementById('signup').style.display = isLoggedIn ? 'none' : 'inline'
+    document.getElementById('goto-login-btn').style.display = isLoggedIn ? 'none' : 'inline'
+    document.getElementById('goto-signup-btn').style.display = isLoggedIn ? 'none' : 'inline'
     document.getElementById('logout-btn').style.display = isLoggedIn ? 'inline' : 'none'
 }

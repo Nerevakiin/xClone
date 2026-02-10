@@ -70,6 +70,7 @@ const wss = new WebSocketServer({ server }) // <- pass the HTTP server here
 // websocket connection handler. this handles the new connection. Runs for each new client that connects !!!!!
 
 wss.on('connection', (ws, request) => {
+    ws.on('error', console.error)
 
     console.log('NEW WEBSOCKET CONNECTION!')
 
@@ -127,6 +128,7 @@ wss.on('connection', (ws, request) => {
 
     // send welcome message
     ws.send(JSON.stringify({
+        type: 'chat',
         user: 'system',
         text: `wra na gleipseis poutses gay adra`
     }))
