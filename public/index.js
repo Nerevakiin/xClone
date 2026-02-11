@@ -2,8 +2,10 @@ import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 import { logout } from '/logout.js'
 import { initializeSocket, sendChatMessage, startCamera, initiateCall, hangUpCall } from '/socket.js'
+import Uwuifier from "https://esm.sh/uwuifier"
 
 
+const uwuifier = new Uwuifier() // THE UWUIFIER
 
 let name = null; // Declare name at the top level
 
@@ -116,6 +118,7 @@ hangUpBtn.addEventListener('click', hangUpCall)
 
 
 
+// ============== CLICK EVENTS ===============
 
 document.addEventListener('click', function (e) {
     if (e.target.dataset.like) {
@@ -146,6 +149,8 @@ document.addEventListener('click', function (e) {
 
 
 
+
+// ================== HANDLERS ================
 
 function handleLikeClick(tweetId) {
 
@@ -191,6 +196,9 @@ function handleReplyClick(replyId) {
 }
 
 
+
+
+
 function handleMyReplyBtnClick(tweetId) {
     // get the reply textarea for the specific tweet
     const replyInput = document.getElementById(`reply-input-${tweetId}`)
@@ -234,6 +242,9 @@ function handleTweetBtnClick() {
     if (!tweetInput.value) {
         console.log("you must enter a valid string")
     } else {
+
+        console.log(uwuifier.uwuifySentence(tweetInput.value))
+
         let newTweet = {
             handle: name,
             profilePic: `images/literallyme.jpeg`,
