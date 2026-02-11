@@ -216,7 +216,7 @@ function handleMyReplyBtnClick(tweetId) {
         const newReply = {
             handle: name,
             profilePic: `images/literallyme.jpeg`,
-            tweetText: replyInput.value,
+            tweetText: uwuifier.uwuifySentence(replyInput.value),
             uuid: uuidv4()
         }
 
@@ -250,7 +250,7 @@ function handleTweetBtnClick() {
             profilePic: `images/literallyme.jpeg`,
             likes: 0,
             retweets: 0,
-            tweetText: `${tweetInput.value}`,
+            tweetText: `${uwuifier.uwuifySentence(tweetInput.value)}`,
             replies: [],
             isLiked: false,
             isRetweeted: false,

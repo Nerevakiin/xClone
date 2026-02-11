@@ -13,5 +13,5 @@ more stuff to add:
 10. Add websockets for messaging. ✅ (7 Feb 2026)
 11. Convert the server to HTTPS ✅ (9 Feb 2026)
 12. Add webRTC for video calls. ✅ (11 Feb 2026)
-13. Auto uwuification
+13. Auto uwuification ✅ (11 Feb 2026)
 14. Upload to a contact vm
