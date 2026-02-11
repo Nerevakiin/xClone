@@ -113,9 +113,13 @@ wss.on('connection', (ws, request) => {
                     }
                 })
 
+            } else {
+                wss.clients.forEach((client) => {
+                    if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        client.send(data.toString())
+                    }
+                })
             }
-
-
 
 
         } catch (err) {
@@ -128,9 +132,8 @@ wss.on('connection', (ws, request) => {
 
     // send welcome message
     ws.send(JSON.stringify({
-        type: 'chat',
-        user: 'system',
-        text: `wra na gleipseis poutses gay adra`
+        type: 'system',
+        text: 'wra na gleipseis poutses gay adra'
     }))
 })
 

@@ -9,7 +9,9 @@ let localStream = null
 let peerConnection = null
 let iceCandidateQueue = []
 
-
+const configuration = {
+        iceServers: [{ urls: "stun:stun1.l.google.com:5349" }]
+    }
 
 export function initializeSocket() {
 
@@ -17,9 +19,7 @@ export function initializeSocket() {
 
     socket = new WebSocket('wss://192.168.100.3:8000/') // create the connection to the websocket server written in server.js
 
-    const configuration = {
-        iceServers: [{ urls: "stun:stun1.l.google.com:5349" }]
-    }
+    
 
     // this event fires once when the connection is successfully established
     socket.addEventListener('open', (event) => {
@@ -31,25 +31,57 @@ export function initializeSocket() {
     });
 
 
-    socket.addEventListener('message', (event) => {
+
+
+    socket.addEventListener('message', async (event) => {
         try {
 
             const data = JSON.parse(event.data)
 
-
-            if (data.type === 'chat' && data.user === 'system') {
+            if (data.type === 'system') {
 
                 const msg = document.createElement('div')
-                msg.innerHTML = `<strong>${data.user}:</strong> ${data.text}` // contains the message from the server
+                msg.innerHTML = `<strong>${data.type}:</strong> ${data.text}` // contains the message from the server
 
                 messagesDiv.appendChild(msg)
                 messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
             }
 
-            else if (data.type === 'chat' && data.user !== 'system') {
-
+            else if (data.type === 'chat') {
                 displayMessage(data.user, data.text, data.timestamp)
             }
+
+
+            // WebRTC SIGNALLING LOGIC
+            if (data.offer) {
+
+                console.log('received offer, creating answer...')
+                await handleOffer(data.offer)
+
+            } else if (data.answer) {
+
+                console.log('received answer...')
+                await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer))
+                processQueuedCandidates()
+
+            } else if (data.candidate) {
+                console.log('received ICE candidate')
+
+                if (peerConnection && peerConnection.remoteDescription && peerConnection.remoteDescription.type) {
+                    await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate))
+                } else {
+                    console.log('queueing candidate: remoteDescription not set yet...')
+                    iceCandidateQueue.push(data.candidate)
+                }
+            }
+
+
+            if (data.type === 'hangup') {
+                console.log('the other person hung up')
+                hangUp()
+            }
+
+
 
 
         } catch (err) {
@@ -118,10 +150,14 @@ function createPeerConnection() {
 
     // when the remote stream arrives, show it in the remote video tag
     peerConnection.ontrack = (event) => {
-        console.log('got remote track: ', event.stream[0])
+        console.log('got remote track: ', event.streams[0])
         remoteVideo.srcObject = event.streams[0]
     }
 
+    // add my camera/mic to the connection
+    localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream)
+    })
 
 }
 
@@ -152,16 +188,49 @@ export async function hangUpCall(e) {
     console.log('hanging up the call...')
 
     // run the cleanup locally
-    if (peerConnection) {
-        peerConnection.close()
-        peerConnection = null 
-    }
-
-    remoteVideo.srcObject = null 
-
-    iceCandidateQueue = []
+    hangUp()
 
     // tell the other person via the websocket
     socket.send(JSON.stringify({ type: 'hangup' }))
+}
 
+function  hangUp(){
+
+    if (peerConnection) {
+        peerConnection.close()
+        peerConnection = null
+    }
+
+    remoteVideo.srcObject = null
+
+    iceCandidateQueue = []
+
+}
+
+
+// this runs when teh OTHEr person receives your offer
+async function handleOffer(offer) {
+
+    createPeerConnection()
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
+
+    const answer = await peerConnection.createAnswer()
+    await peerConnection.setLocalDescription(answer)
+
+    console.log('sending answer...')
+
+    socket.send(JSON.stringify({ answer: answer }))
+
+    processQueuedCandidates()
+
+}
+
+
+async function processQueuedCandidates() {
+
+    console.log(`Processing ${iceCandidateQueue.length} queued candidates.`)
+    for (const candidate of iceCandidateQueue) {
+        await peerConnection.addIceCandidate(new RTCIceCandidate(candidate))
+    }
+    iceCandidateQueue = []
 }
