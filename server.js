@@ -79,6 +79,12 @@ wss.on('connection', (ws, request) => {
         // now request.session is available
         const userName = request.session.userName || 'agnwsto poutanaki'
 
+        // if (!userName) {
+        //     console.log('no ws for unlogged users')
+        //     ws.close()
+        //     return
+        // }
+
         ws.username = userName
         console.log(`${ws.username} connected via websocket`)
     })
