@@ -14,5 +14,5 @@ more stuff to add:
 11. Convert the server to HTTPS ✅ (9 Feb 2026)
 12. Add webRTC for video calls. ✅ (11 Feb 2026)
 13. Auto uwuification ✅ (11 Feb 2026)
-14. Make the website responsive to different screens and mobile
+14. Make the website responsive to different screens and mobile ✅ (18 Feb 2026)
 15. Upload to a contact vm
