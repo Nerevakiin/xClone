@@ -518,3 +518,76 @@ textarea{
     color: white;        /* Grey color */
     margin-right: 8px;  /* Space between time and name */
 }
+
+
+
+/* =========================================
+   MOBILE TOGGLES (Screens 1200px and below)
+   ========================================= */
+
+/* 1. Default State (PC): Buttons are hidden */
+.mobile-toggle-btn {
+    display: none;
+}
+
+/* 2. Responsive State */
+@media (max-width: 1200px) {
+
+    /* --- Show the Toggle Buttons --- */
+    .mobile-toggle-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 200px; /* Aligns roughly with top of feed */
+        width: 60px;
+        height: 60px;
+        z-index: 1000;
+        
+        background-color: #FF69B4; /* Pink background */
+        border: 3px solid #5BCEFA; /* Blue border */
+        border-radius: 15px;       /* Soft square shape */
+        color: white;
+        font-size: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: transform 0.2s;
+    }
+
+    .mobile-toggle-btn:active {
+        transform: scale(0.9);
+    }
+
+    /* Position Video Button on Left */
+    .video-toggle {
+        left: 10px;
+    }
+
+    /* Position Chat Button on Right */
+    .chat-toggle {
+        right: 10px;
+    }
+
+    /* --- Hide the Modals by default --- */
+    .chatroom, .videocall {
+        display: none !important; /* Force hide */
+        
+        /* Reset positioning so they center on screen when opened */
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 400px;
+        height: 70vh;
+        z-index: 2000;
+        box-shadow: 0 0 0 100vw rgba(0,0,0,0.5); 
+    }
+
+    /* --- Class to Show them when button is clicked --- */
+    .chatroom.active, .videocall.active {
+        display: flex !important; /* Flex allows your inner layout to work */
+    }
+}
