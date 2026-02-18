@@ -119,6 +119,7 @@ function displayMessage(user, text, time) {
 
 // ========== WebRTC LOGIC HERE ========
 
+
 export async function startCamera() {
     try {
         const constraints = { 'video': true, 'audio': true }

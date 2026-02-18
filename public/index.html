@@ -16,6 +16,7 @@
 	
 	<title>Twinkter</title>
 	<link rel="icon" type="image/x-icon" href="/images/icon.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 
 <body>
@@ -23,9 +24,11 @@
 		<h1>Twinkter</h1>
 		<div class="header-banner">
 			<p id="greeting" class="top-banner-greeting">greeting</p>
-			<a id="goto-login-btn" class="goto-login-btn" href="login.html">login</a>
-			<a id="goto-signup-btn" class="goto-signup-btn" href="signup.html">signup</a>
-			<a id="logout-btn" class="logout-btn" href="frontPage.html">logout</a>
+			<div class="auth-btns">
+				<a id="goto-login-btn" class="goto-login-btn" href="login.html">login</a>
+				<a id="goto-signup-btn" class="goto-signup-btn" href="signup.html">signup</a>
+				<a id="logout-btn" class="logout-btn" href="frontPage.html">logout</a>
+			</div>
 
 		</div>
 	</header>
@@ -61,6 +64,9 @@
 		</div>
 
 		<form class="videocall-btns">
+			<button id="camera-btn" class="camera-btn">
+				<img src="images/cam_icon.svg" class="camera-icon">
+			</button>
 			<button id="call-btn">call</button>
 			<button id="hang-btn">hang up</button>
 		</form>

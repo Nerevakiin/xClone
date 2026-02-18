@@ -50,14 +50,40 @@ main, header{
 }
 
 header{
-    padding-bottom: 20px;
+    border: solid black 2px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; 
+    
+}
+
+.header-banner {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: solid black 2px;
 }
 
 
+.auth-btns .goto-login-btn,
+.auth-btns .goto-signup-btn {
+    
+    background-color: aqua;
+    border-radius: 5px;
+    color: black;
+    font-weight: 900;
+    padding: 0.65em;
+    text-decoration: none;
+}
+
+
+input, button {
+    font-family: inherit;
+    
+
+}
 
 .tweet-input-area {
     display: flex;
