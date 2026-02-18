@@ -3,15 +3,21 @@
 const messagesDiv = document.getElementById('chatroom-inner')
 const localVideo = document.getElementById('localVideo')
 const remoteVideo = document.getElementById('remoteVideo')
+const chatInput = document.getElementById('chat-input')
+
 
 let socket = null
 let localStream = null
 let peerConnection = null
 let iceCandidateQueue = []
 
+const typingIndicator = document.getElementById('typing-indicator')
+let typingTimer = null
+
 const configuration = {
     iceServers: [{ urls: "stun:stun1.l.google.com:5349" }]
 }
+
 
 export function initializeSocket() {
 
@@ -49,7 +55,19 @@ export function initializeSocket() {
 
             else if (data.type === 'chat') {
                 displayMessage(data.user, data.text, data.timestamp)
+
+            } else if (data.type === 'typing') {
+
+                typingIndicator.textContent = `${data.user} is typing...`
+
+                console.log('typing indicator socket')
+
+                clearTimeout(typingTimer)
+                typingTimer = setTimeout(() => {
+                    typingIndicator.textContent = ''
+                }, 3000) 
             }
+
 
 
             // WebRTC SIGNALLING LOGIC
@@ -113,7 +131,15 @@ function displayMessage(user, text, time) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
 }
 
+chatInput.addEventListener('input', (user) => {
 
+    console.log('typing indicator socket')
+
+    socket.send(JSON.stringify({
+        type: 'typing',
+        user: name || 'Stranger'
+    }))
+})
 
 
 

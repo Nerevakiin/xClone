@@ -67,6 +67,8 @@ const clickBtn = document.getElementById('call-btn')
 const hangUpBtn = document.getElementById('hang-btn')
 
 
+
+
 // button that opens the camera
 
 openCameraBtn.addEventListener('click', (e) => {
@@ -87,7 +89,6 @@ sendMsgBtn.addEventListener('click', (e) => {
     const text = chatInput.value.trim()
     if (text === '') return 
 
-
     // generate local time
     const now = new Date().toLocaleTimeString()
 
@@ -106,6 +107,9 @@ sendMsgBtn.addEventListener('click', (e) => {
 })
 
 
+
+
+
 function displayMessage(user, text, time) {
 
     const msg = document.createElement('div')
@@ -117,6 +121,12 @@ function displayMessage(user, text, time) {
     messagesDiv.appendChild(msg)
     messagesDiv.scrollTop = messagesDiv.scrollHeight // Auto-scroll to bottom
 }
+
+
+
+
+
+
 
 
 clickBtn.addEventListener('click', initiateCall)

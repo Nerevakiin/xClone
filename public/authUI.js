@@ -15,6 +15,8 @@ export async function checkAuth() {
         if (!user.isLoggedIn) {
             return false
         }
+
+        name = user.name
         
         return user.name
 
