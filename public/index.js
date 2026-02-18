@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', initializeTweetsData);
 // =========== WEBSOCKET & WebRTC Logic =======
 
 initializeSocket() // starting the socket here
-startCamera()
+
 
 
 // sends the message to the server when the btn is clicked
@@ -62,8 +62,17 @@ const chatInput = document.getElementById('chat-input')
 const sendMsgBtn = document.getElementById('msg-btn')
 const messagesDiv = document.getElementById('chatroom-inner')
 
+const openCameraBtn = document.getElementById('camera-btn')
 const clickBtn = document.getElementById('call-btn')
 const hangUpBtn = document.getElementById('hang-btn')
+
+
+// button that opens the camera
+
+openCameraBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    startCamera()
+})
 
 // CHAT LOGIC FRONT END
 

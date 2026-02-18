@@ -37,6 +37,7 @@ i{
 
 /* layout */
 
+
 main, header{
     width: 300px;
     margin: 0 auto;
@@ -50,12 +51,14 @@ main, header{
 }
 
 header{
-    border: solid black 2px;
-    padding-bottom: 10px;
+    padding-bottom: 1.5em;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between; 
+    width: 90%;
+    max-width: 400px;
+    margin: 10px auto;
     
 }
 
@@ -63,19 +66,33 @@ header{
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: solid black 2px;
+    gap: 10px;
 }
 
 
-.auth-btns .goto-login-btn,
-.auth-btns .goto-signup-btn {
-    
-    background-color: aqua;
-    border-radius: 5px;
-    color: black;
-    font-weight: 900;
-    padding: 0.65em;
+
+.auth-btns a, .goto-homescreen-btn {
+    background-color: #5BCEFA;
+    border: 2px solid white;
+    border-radius: 12px;
+    color: white ;
+    font-size: 14px;
+    padding: 8px 15px;
+    text-transform: uppercase;
     text-decoration: none;
+    font-weight: 900;
+}
+
+.auth-btns a:hover {
+    background-color: white;
+    color: #5BCEFA ;
+}
+
+#greeting {
+    
+    font-weight: 500;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 
@@ -296,7 +313,7 @@ textarea{
 /* CHATROOM */
 
 .chatroom {
-    border: solid black 2px;
+    border: solid #5BCEFA 2px;
     border-radius: 20px;
     position: fixed;
     height: 38rem;
@@ -316,7 +333,7 @@ textarea{
 }
 
 .chatroom-inner {
-    border: solid black 1px;
+    border: solid #5BCEFA 1px;
     border-radius: 10px;
     margin: 10px;
     background-color: #5BCEFA;
@@ -327,16 +344,59 @@ textarea{
 
 }
 
-.text-messages {
+/* .text-messages {
     align-items: center;
     justify-content: center;
     display: flex;
     padding: 10px;
     margin-top: auto;
+} */
+
+.text-messages {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-top: auto;
 }
 
-.text-messages#text {
-    width: 50px;
+#chat-input {
+    font-family: inherit;
+    flex: 1;
+    padding: 12px 18px;
+    border: 2px solid white;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    outline: none;
+    
+}
+
+#chat-input:focus {
+    border-color: #5BCEFA; 
+    box-shadow: 0 0 8px rgba(91, 206, 250, 0.5);
+}
+
+#msg-btn {
+    background-color: #5BCEFA;
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 0 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.2s;
+    white-space: nowrap;
+}
+
+#msg-btn:hover {
+    background-color: #3eb0d6;
+    transform: scale(1.05);
+}
+
+#msg-btn:active {
+    transform: scale(0.95);
 }
 
 .hidden {
@@ -347,7 +407,7 @@ textarea{
 /* VIDEOCALL */
 
 .videocall {
-    border: solid black 2px;
+    border: solid #5BCEFA 2px;
     border-radius: 20px;
     position: fixed;
     height: 38rem;
@@ -368,7 +428,7 @@ textarea{
 }
 
 .videocall-inner {
-    border: solid black 1px;
+    border: solid #5BCEFA 1px;
     border-radius: 10px;
     margin: 10px;
     background-color: #5BCEFA;
@@ -387,7 +447,44 @@ textarea{
     display: flex;
     padding: 10px;
     margin-top: auto;
+    position: relative;
 }
+
+.videocall-btns .camera-btn {
+    position: absolute;
+    left: 20px;
+    
+    background: #5BCEFA;
+    border: 2px solid white;
+    border-radius: 50%; /* Makes it a circle */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#call-btn, #hang-btn {
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+#call-btn:hover {
+    background-color: green;;
+}
+
+#hang-btn {
+    background-color: #ff4b4b; /* Red for hang up */
+    color: white;
+}
+
 
 
 #localVideo {
