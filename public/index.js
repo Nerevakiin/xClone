@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid'
 import { checkAuth, renderGreeting, showHideMenuItems } from '/authUI.js'
 import { logout } from '/logout.js'
-import { initializeSocket, sendChatMessage, startCamera, initiateCall, hangUpCall } from '/socket.js'
+import { initializeSocket, sendChatMessage, startCamera, initiateCall, hangUpCall, stopCamera, isCameraOpen } from '/socket.js'
 import Uwuifier from "https://esm.sh/uwuifier"
 
 
@@ -71,7 +71,13 @@ const hangUpBtn = document.getElementById('hang-btn')
 
 openCameraBtn.addEventListener('click', (e) => {
     e.preventDefault()
-    startCamera()
+    if (!isCameraOpen) {
+        startCamera()
+        openCameraBtn.classList.add('camera-open')
+    } else {
+        stopCamera()
+        openCameraBtn.classList.remove('camera-open')
+    }
 })
 
 // CHAT LOGIC FRONT END

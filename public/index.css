@@ -480,6 +480,10 @@ textarea{
     background-color: green;;
 }
 
+.camera-open {
+    background-color: red !important;
+}
+
 #hang-btn {
     background-color: #ff4b4b; /* Red for hang up */
     color: white;
@@ -518,6 +522,11 @@ textarea{
     color: white;        /* Grey color */
     margin-right: 8px;  /* Space between time and name */
 }
+
+
+
+
+
 
 
 

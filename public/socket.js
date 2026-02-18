@@ -10,8 +10,8 @@ let peerConnection = null
 let iceCandidateQueue = []
 
 const configuration = {
-        iceServers: [{ urls: "stun:stun1.l.google.com:5349" }]
-    }
+    iceServers: [{ urls: "stun:stun1.l.google.com:5349" }]
+}
 
 export function initializeSocket() {
 
@@ -19,7 +19,7 @@ export function initializeSocket() {
 
     socket = new WebSocket('wss://192.168.100.3:8000/') // create the connection to the websocket server written in server.js
 
-    
+
 
     // this event fires once when the connection is successfully established
     socket.addEventListener('open', (event) => {
@@ -119,6 +119,7 @@ function displayMessage(user, text, time) {
 
 // ========== WebRTC LOGIC HERE ========
 
+export let isCameraOpen = false
 
 export async function startCamera() {
     try {
@@ -131,9 +132,25 @@ export async function startCamera() {
         // fnd the video element
         localVideo.srcObject = localStream
 
+        isCameraOpen = true
+        return isCameraOpen
 
     } catch (err) {
         console.error('error accesing media devices: ', err)
+    }
+}
+
+export async function stopCamera() {
+    try {
+        localStream.getTracks().forEach((track) => {
+            track.stop();
+
+            localVideo.srcObject = null
+            isCameraOpen = false
+            return isCameraOpen
+        });
+    } catch (err) {
+        console.error('error closing media devices: ', err)
     }
 }
 
@@ -195,7 +212,7 @@ export async function hangUpCall(e) {
     socket.send(JSON.stringify({ type: 'hangup' }))
 }
 
-function  hangUp(){
+function hangUp() {
 
     if (peerConnection) {
         peerConnection.close()
