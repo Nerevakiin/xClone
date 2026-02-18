@@ -299,6 +299,7 @@ transform: scale(0.95);
 .signup-screen {
     padding-top: 20px;
     margin-top: 60px;
+    
 }
 
 .signup-form {
@@ -306,18 +307,58 @@ transform: scale(0.95);
     flex-direction: column;
     margin: 0 auto;
     gap: .4rem;
+    
+    
 }
 
 .form-inner {
     display: flex;
     flex-direction: column;
     gap: .4rem;
+    backdrop-filter: blur(10px);           /* Blurs what's behind it */
 }
 
 
 .login-screen {
     padding-top: 20px;
     margin-top: 60px;
+}
+
+.form-inner h2 {
+    color: white;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-size: 28px;
+}
+
+label {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px; /* Aligns with the curve of the input */
+    margin-bottom: 5px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-inner input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
 }
 
 
@@ -337,6 +378,23 @@ transform: scale(0.95);
     transform: translate(-50%, -50%);
 
 }
+
+
+/* =========================================
+   SIGN UP / LOGIN PAGE STYLES
+   ========================================= */
+
+
+
+
+
+
+
+
+
+/* =========================================
+   --------WebSocket and WebRTC-------------
+   ========================================= */
 
 
 /* CHATROOM */
