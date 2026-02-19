@@ -26,7 +26,7 @@ const serverOptions = {
 
 // CORS allow us to deploy our backend so others can also interact with it
 app.use(cors({
-    origin: `https://192.168.100.3:${PORT}`,
+    origin: `https://192.168.100.2:${PORT}`,
     credentials: true
 }))
 

@@ -23,7 +23,7 @@ export function initializeSocket() {
 
     console.log("Attempting to connect to WSS..."); // this to confirm function runs
 
-    socket = new WebSocket('wss://192.168.100.3:8000/') // create the connection to the websocket server written in server.js
+    socket = new WebSocket('wss://192.168.100.2:8000/') // create the connection to the websocket server written in server.js
 
 
 
